@@ -47,12 +47,15 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - $(buildConfiguration)'
-  inputs:
+inputs:
     command: 'publish'
     projects: '**/*.csproj'
     publishWebProjects: false
     arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
     zipAfterPublish: true
+
+- task: WhiteSource Bolt@20
+  displayName: 'Run WhiteSource Bolt'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
